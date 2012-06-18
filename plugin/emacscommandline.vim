@@ -1,31 +1,9 @@
 " Make more like emacs
-cnoremap <C-A> <Home>
-cnoremap <C-B> <Left>
-cnoremap <C-F> <Right>
-cnoremap <C-P> <Up>
-cnoremap <C-N> <Down>
-cnoremap <Esc>r <C-F>?
-cmap <M-R> <Esc>r
+cnoremap <C-a> <Home>
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
 
-" Maps to old shortcuts using Ctrl-O as a prefix
-cnoremap <C-O><C-A>      <C-A>
-cnoremap <C-O><C-E>      <C-E>
-cnoremap <C-O><C-B>      <C-B>
-cnoremap <C-O><C-F>      <C-F>
-cnoremap <C-O><C-P>      <C-P>
-cnoremap <C-O><C-D>      <C-D>
-cnoremap <C-O><C-K>      <C-K>
-cnoremap <C-O><C-U>      <C-U>
-cnoremap <C-O><C-W>      <C-W>
-cnoremap <C-O><C-Y>      <C-Y>
-cnoremap <C-O><C-Z>      <C-Z>
-cnoremap <C-O><C-_>      <C-_>
-cnoremap <C-O><C-X><C-U> <C-X><C-U>
-cnoremap <C-O><Del>      <Del>
-cnoremap <C-O><BS>       <BS>
-
-cnoremap <Esc>f <C-\>e<SID>ForwardWord()<CR>
-cmap <M-F> <Esc>f
+cmap <M-f> <C-\>e<SID>ForwardWord()<CR>
 function! <SID>ForwardWord()
     let l:loc = strpart(getcmdline(), 0, getcmdpos() - 1)
     let l:roc = strpart(getcmdline(), getcmdpos() - 1)
@@ -41,8 +19,7 @@ function! <SID>ForwardWord()
     return getcmdline()
 endfunction
 
-cnoremap <Esc>b <C-\>e<SID>BackwardWord()<CR>
-cmap <M-B> <Esc>b
+cmap <M-b> <C-\>e<SID>BackwardWord()<CR>
 function! <SID>BackwardWord()
     let l:loc = strpart(getcmdline(), 0, getcmdpos() - 1)
     let l:roc = strpart(getcmdline(), getcmdpos() - 1)
@@ -59,8 +36,8 @@ function! <SID>BackwardWord()
     return getcmdline()
 endfunction
 
-cnoremap <Del> <C-\>e<SID>DeleteChar()<CR>
-cmap <C-D> <Del>
+cmap <Del> <C-\>e<SID>DeleteChar()<CR>
+cmap <C-d> <Del>
 function! <SID>DeleteChar()
     call <SID>saveUndoHistory(getcmdline(), getcmdpos())
     let l:cmd     = getcmdline()
@@ -93,7 +70,7 @@ function! <SID>BackwardDeleteChar()
     return l:ret
 endfunction
 
-cnoremap <C-K> <C-\>e<SID>KillLine()<CR>
+cmap <C-k> <C-\>e<SID>KillLine()<CR>
 function! <SID>KillLine()
     call <SID>saveUndoHistory(getcmdline(), getcmdpos())
     let l:cmd = getcmdline()
@@ -106,7 +83,7 @@ function! <SID>KillLine()
     return l:ret
 endfunction
 
-cnoremap <C-U> <C-\>e<SID>BackwardKillLine()<CR>
+cmap <C-u> <C-\>e<SID>BackwardKillLine()<CR>
 function! <SID>BackwardKillLine()
     call <SID>saveUndoHistory(getcmdline(), getcmdpos())
     let l:cmd = getcmdline()
@@ -120,8 +97,7 @@ function! <SID>BackwardKillLine()
     return l:ret
 endfunction
 
-cnoremap <Esc>d <C-\>e<SID>KillWord()<CR>
-cmap <M-D> <Esc>d
+cmap <M-d> <C-\>e<SID>KillWord()<CR>
 function! <SID>KillWord()
     call <SID>saveUndoHistory(getcmdline(), getcmdpos())
     let l:loc = strpart(getcmdline(), 0, getcmdpos() - 1)
@@ -142,7 +118,7 @@ function! <SID>KillWord()
     return l:ret
 endfunction
 
-cnoremap <C-W> <C-\>e<SID>DeleteBackwardsToWhiteSpace()<CR>
+cmap <C-w> <C-\>e<SID>DeleteBackwardsToWhiteSpace()<CR>
 function! <SID>DeleteBackwardsToWhiteSpace()
     call <SID>saveUndoHistory(getcmdline(), getcmdpos())
     let l:loc = strpart(getcmdline(), 0, getcmdpos() - 1)
@@ -164,8 +140,7 @@ function! <SID>DeleteBackwardsToWhiteSpace()
     return l:ret
 endfunction
 
-cnoremap <Esc><BS> <C-\>e<SID>BackwardKillWord()<CR>
-cmap <M-BS> <Esc><BS>
+cmap <M-BS> <C-\>e<SID>BackwardKillWord()<CR>
 function! <SID>BackwardKillWord()
     " Do same as in-built Ctrl-W, except assign deleted text to @c
     call <SID>saveUndoHistory(getcmdline(), getcmdpos())
@@ -190,14 +165,14 @@ function! <SID>BackwardKillWord()
     return l:ret
 endfunction
 
-cnoremap <C-Y> <C-\>e<SID>Yank()<CR>
+cmap <C-y> <C-\>e<SID>Yank()<CR>
 function! <SID>Yank()
     let l:cmd = getcmdline()
     call setcmdpos(getcmdpos() + strlen(@c))
     return strpart(l:cmd, 0, getcmdpos() - 1) . @c . strpart(l:cmd, getcmdpos() - 1)
 endfunction
 
-cnoremap <C-Z> <C-\>e<SID>ToggleExternalCommand()<CR>
+cmap <C-z> <C-\>e<SID>ToggleExternalCommand()<CR>
 function! <SID>ToggleExternalCommand()
     let l:cmd = getcmdline()
     if ('!' == strpart(l:cmd, 0, 1))
@@ -220,8 +195,8 @@ function! <SID>saveUndoHistory(cmdline, cmdpos)
         call remove(s:oldcmdline, 100)
     endif
 endfunction
-cnoremap <C-_> <C-\>e<SID>Undo()<CR>
-cmap <C-X><C-U> <C-_>
+cmap <C-S-_> <C-\>e<SID>Undo()<CR>
+cmap <C-_> <C-S-_>
 function! <SID>Undo()
     if len(s:oldcmdline) == 0
         return getcmdline()
